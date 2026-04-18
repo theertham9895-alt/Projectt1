@@ -32,10 +32,16 @@ export const registerUser = async (userData) => {
 
 // ========== EVENTS/ACTIVITIES ==========
 export const getActivities = async () => {
-  const res = await fetch(`${API_URL}/events`, {
-    headers: authHeaders()
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/events`, {
+      headers: authHeaders()
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) {
+    console.error('getActivities failed:', err);
+    return [];
+  }
 };
 
 export const createActivity = async (eventData) => {
