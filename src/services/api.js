@@ -1,101 +1,83 @@
 const API_URL = 'http://localhost:5000/api';
-
-// Helper to get token
 const getToken = () => localStorage.getItem('token');
-
-// Helper for authenticated requests
 const authHeaders = () => ({
   'Content-Type': 'application/json',
   'Authorization': `Bearer ${getToken()}`
 });
 
-// ========== AUTH ==========
 export const loginUser = async (email, password) => {
-  const res = await fetch(`${API_URL}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  });
-  const data = await res.json();
-  if (data.token) localStorage.setItem('token', data.token);
-  return data;
+  try {
+    const res = await fetch(`${API_URL}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+    const data = await res.json();
+    if (data.token) localStorage.setItem('token', data.token);
+    return data;
+  } catch (err) { return { error: 'Server offline' }; }
 };
 
 export const registerUser = async (userData) => {
-  const res = await fetch(`${API_URL}/auth/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData)
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userData) });
+    return res.json();
+  } catch (err) { return { error: 'Server offline' }; }
 };
 
-// ========== EVENTS/ACTIVITIES ==========
 export const getActivities = async () => {
   try {
-    const res = await fetch(`${API_URL}/events`, {
-      headers: authHeaders()
-    });
+    const res = await fetch(`${API_URL}/events`, { headers: authHeaders() });
     if (!res.ok) return [];
     return await res.json();
-  } catch (err) {
-    console.error('getActivities failed:', err);
-    return [];
-  }
+  } catch (err) { return []; }
 };
 
 export const createActivity = async (eventData) => {
-  const res = await fetch(`${API_URL}/events`, {
-    method: 'POST',
-    headers: authHeaders(),
-    body: JSON.stringify(eventData)
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/events`, { method: 'POST', headers: authHeaders(), body: JSON.stringify(eventData) });
+    return res.json();
+  } catch (err) { return { error: 'Server offline' }; }
 };
 
 export const deleteActivity = async (id) => {
-  const res = await fetch(`${API_URL}/events/${id}`, {
-    method: 'DELETE',
-    headers: authHeaders()
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/events/${id}`, { method: 'DELETE', headers: authHeaders() });
+    return res.json();
+  } catch (err) { return { error: 'Server offline' }; }
 };
 
-// ========== STUDENTS ==========
 export const getStudents = async () => {
-  const res = await fetch(`${API_URL}/students`, {
-    headers: authHeaders()
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/students`, { headers: authHeaders() });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) { return []; }
 };
 
 export const getMyProfile = async () => {
-  const res = await fetch(`${API_URL}/students/profile`, {
-    headers: authHeaders()
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/students/profile`, { headers: authHeaders() });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) { return null; }
 };
 
 export const getDashboard = async () => {
-  const res = await fetch(`${API_URL}/students/dashboard`, {
-    headers: authHeaders()
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/students/dashboard`, { headers: authHeaders() });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) { return null; }
 };
 
-// ========== ATTENDANCE ==========
 export const getMyAttendance = async () => {
-  const res = await fetch(`${API_URL}/attendance/my`, {
-    headers: authHeaders()
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/attendance/my`, { headers: authHeaders() });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) { return []; }
 };
 
 export const markAttendance = async (eventId, studentId, status) => {
-  const res = await fetch(`${API_URL}/attendance/mark`, {
-    method: 'POST',
-    headers: authHeaders(),
-    body: JSON.stringify({ eventId, studentId, status })
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/attendance/mark`, { method: 'POST', headers: authHeaders(), body: JSON.stringify({ eventId, studentId, status }) });
+    return res.json();
+  } catch (err) { return { error: 'Server offline' }; }
 };
