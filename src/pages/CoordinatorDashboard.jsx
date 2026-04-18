@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/Card';
 import Button from '../components/Button';
-import { activities, students } from '../data/mockData';
+import { getActivities, getStudents } from '../services/api';
 import { Users, Calendar, Clock, Award, Plus, ArrowRight } from 'lucide-react';
 
 function CoordinatorDashboard() {
+  const [activities, setActivities] = useState([]);
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    getActivities().then(data => setActivities(Array.isArray(data) ? data : []));
+    getStudents().then(data => setStudents(Array.isArray(data) ? data : []));
+  }, []);
+
   const totalStudents = students.length;
   const totalActivities = activities.length;
   const upcomingActivities = activities.filter(a => a.status === 'upcoming').length;

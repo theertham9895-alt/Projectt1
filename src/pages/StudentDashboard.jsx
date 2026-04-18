@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/Card';
 import Button from '../components/Button';
 import Badge from '../components/Badge';
-import { activities } from '../data/mockData';
+import { getActivities } from '../services/api';
 import { Clock, Calendar, TrendingUp, Award, ArrowRight } from 'lucide-react';
 
 function StudentDashboard() {
+  const [activities, setActivities] = useState([]);
+  useEffect(() => {
+  getActivities().then(data => setActivities(Array.isArray(data) ? data : []));
+  }, []);
+
   const upcomingActivities = activities.filter(a => a.status === 'upcoming').slice(0, 3);
   
   const stats = {

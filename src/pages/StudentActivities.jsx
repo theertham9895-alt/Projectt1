@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import Sidebar from '../components/Sidebar';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/Card';
 import Button from '../components/Button';
 import Badge from '../components/Badge';
 import Input from '../components/Input';
-import { activities } from '../data/mockData';
+import { getActivities } from '../services/api';
 import { Calendar, MapPin, Clock, Users, Search } from 'lucide-react';
 
 function StudentActivities() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('all');
-
+  const [activities, setActivities] = useState([]);
+  useEffect(() => {
+    getActivities().then(data => setActivities(Array.isArray(data) ? data : []));
+  }, []);
   // Filter activities
   const filteredActivities = activities.filter(activity => {
     const matchesSearch = activity.title.toLowerCase().includes(searchTerm.toLowerCase());

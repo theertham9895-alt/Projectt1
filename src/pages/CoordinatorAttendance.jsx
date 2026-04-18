@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/Card';
 import Button from '../components/Button';
 import Badge from '../components/Badge';
-import { activities, students } from '../data/mockData';
+import { getActivities, getStudents,markAttendance} from '../services/api';
 import { CheckCircle, XCircle, Clock, Save } from 'lucide-react';
 
 function CoordinatorAttendance() {
   const [selectedActivity, setSelectedActivity] = useState('');
   const [attendance, setAttendance] = useState({});
+  const [activities, setActivities] = useState([]);
+  const [students, setStudents] = useState([]);
 
+  useEffect(() => {
+   getActivities().then(data => setActivities(Array.isArray(data) ? data : []));
+   getStudents().then(data => setStudents(Array.isArray(data) ? data : []));
+  }, []);
   const handleStatusChange = (studentId, status) => {
     setAttendance(prev => ({ ...prev, [studentId]: status }));
   };

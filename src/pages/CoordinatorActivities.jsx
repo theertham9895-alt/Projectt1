@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Badge from '../components/Badge';
-import { activities } from '../data/mockData';
+
+import { getActivities, createActivity, deleteActivity } from '../services/api';
 import { Plus, Calendar, MapPin, Clock, Users, Edit2, Trash2 } from 'lucide-react';
 
 function CoordinatorActivities() {
@@ -18,16 +19,24 @@ function CoordinatorActivities() {
     maxParticipants: '',
     category: ''
   });
+  const [activities, setActivities] = useState([]);
 
+  useEffect(() => {
+  getActivities().then(data => setActivities(Array.isArray(data) ? data : []));
+  }, []);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewActivity(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleAddActivity = (e) => {
+  const handleAddActivity = async (e) => {
     e.preventDefault();
-    alert('Activity created! (In real app, saves to database)');
-    console.log('New activity:', newActivity);
+     const result = await createActivity(newActivity);
+    if (result) {
+      getActivities().then(data => 
+        setActivities(Array.isArray(data) ? data : [])
+      );
+    }
     setShowAddForm(false);
     setNewActivity({ title: '', description: '', date: '', location: '', duration: '', maxParticipants: '', category: '' });
   };
