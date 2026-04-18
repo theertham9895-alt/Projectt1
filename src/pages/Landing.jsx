@@ -46,12 +46,9 @@ function Landing() {
             {/* Left - Text */}
             <div>
               <h2 className="landing-hero-title">
-                Manage NSS Activities <span>Efficiently</span>
+                NSS Activity Management
               </h2>
-              <p className="landing-hero-subtitle">
-                A centralized digital platform to manage volunteer records, track activities, 
-                monitor attendance, and generate reports for the National Service Scheme.
-              </p>
+              
               
               <div className="landing-features-list">
                 <div className="landing-feature-tag">
@@ -60,11 +57,11 @@ function Landing() {
                 </div>
                 <div className="landing-feature-tag">
                   <div className="landing-feature-dot"></div>
-                  Event Management
+                   Activity Management
                 </div>
                 <div className="landing-feature-tag">
                   <div className="landing-feature-dot"></div>
-                  Attendance Tracking
+                  Attendance 
                 </div>
               </div>
             </div>
@@ -141,18 +138,18 @@ function Landing() {
             />
             <FeatureCard 
               icon={<Calendar size={24} />} 
-              title="Event Planning" 
+              title="Events" 
               description="Schedule and manage NSS activities and events" 
             />
             <FeatureCard 
               icon={<ClipboardCheck size={24} />} 
-              title="Attendance Tracking" 
-              description="Record attendance and calculate service hours" 
+              title="Attendance " 
+              description="Record attendance " 
             />
             <FeatureCard 
               icon={<Award size={24} />} 
               title="Certificates" 
-              description="Generate participation certificates automatically" 
+              description="Participation certificates" 
             />
           </div>
         </div>
@@ -163,11 +160,10 @@ function Landing() {
         <div className="container">
           <div className="landing-footer-content">
             <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
-              NSS Activity Management System - Department of IT
+              NSS Activity Management System 
             </p>
-            <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
-              Group No: 06
-            </p>
+            
+          
           </div>
         </div>
       </footer>

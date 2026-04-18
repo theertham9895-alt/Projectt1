@@ -137,49 +137,6 @@ function CoordinatorDashboard() {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Top Volunteers */}
-            <Card>
-              <CardHeader style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <CardTitle>Top Volunteers</CardTitle>
-                <Link to="/coordinator/students">
-                  <Button variant="ghost" size="sm">
-                    View all <ArrowRight size={14} />
-                  </Button>
-                </Link>
-              </CardHeader>
-              <CardContent>
-                {students.length === 0 ? (
-                  <div className="empty-state">
-                    <Users size={48} className="empty-state-icon" />
-                    <p className="empty-state-title">No volunteers registered yet</p>
-                    <Link to="/coordinator/students">
-                      <Button>
-                        <Plus size={16} />
-                        Add First Student
-                      </Button>
-                    </Link>
-                  </div>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {students.slice(0, 5).map((student, index) => (
-                      <div key={student.id} className="student-item">
-                        <div className="student-info">
-                          <div className="avatar avatar-sm avatar-primary">
-                            #{index + 1}
-                          </div>
-                          <div>
-                            <p className="student-name">{student.name}</p>
-                            <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{student.rollNo}</p>
-                          </div>
-                        </div>
-                        <p style={{ fontWeight: 700, color: 'var(--color-primary)' }}>{student.totalHours || 0}h</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
           </div>
 
           {/* Quick Actions */}
